@@ -1,0 +1,7 @@
+<app-one-news
+  *ngFor="let oneNews of news | async"
+  [oneNews]="oneNews"
+  (deleteNews)="onDeleteNews($event)"
+  (editNews)="onEditNews($event)"
+  >
+</app-one-news>

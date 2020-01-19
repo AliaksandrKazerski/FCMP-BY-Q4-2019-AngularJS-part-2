@@ -1,0 +1,50 @@
+<div class="container">
+  <h4 class="card-header">
+    Create news
+  </h4>
+  <form
+    *ngIf="oneNews"
+    (ngSubmit)="onSaveNews()"
+    id="news-form"
+    #form="ngForm"
+  >
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Category</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleFormControlInput1"
+        name="exampleFormControlInput1"
+        value="{{oneNews.category}}"
+        required
+        [(ngModel)]="oneNews.category"
+      >
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Description</label>
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        value="{{oneNews.description}}"
+        required
+        [(ngModel)]="oneNews.description"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      form="news-form"
+      [disabled]="form.invalid"
+    >
+      Save
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="onGoBack()"
+    >
+      Cancel
+    </button>
+  </form>
+</div>
