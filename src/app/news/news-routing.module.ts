@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'edit/:oneNewsID',
     component: NewsFormComponent,
+  },
+  {
+    path: 'edit',
+    component: NewsFormComponent,
   }
 ];
 

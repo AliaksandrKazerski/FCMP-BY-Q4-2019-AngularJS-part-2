@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { OneNewsModel } from '../models/one-news.model';
 import { NewsServicesModule } from '../news-services.module';
 
-const source = [
+const sources = [
   'ABC',
   'CBN',
   'RTL',
@@ -105,7 +105,7 @@ const newsList = [
 ];
 
 const newsListPromise = Promise.resolve(newsList);
-const sourcePromise = Promise.resolve(source);
+const sourcePromise = Promise.resolve(sources);
 
 @Injectable({
   providedIn: NewsServicesModule
