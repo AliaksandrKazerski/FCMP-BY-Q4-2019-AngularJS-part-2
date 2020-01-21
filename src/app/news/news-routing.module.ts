@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NewsListComponent, NewsFormComponent } from './components';
+import { NewsFormComponent, NewsComponent } from './components';
 
 const routes: Routes = [
   {
     path: 'news',
-    component: NewsListComponent,
+    component: NewsComponent,
   },
   {
     path: 'edit/:oneNewsID',

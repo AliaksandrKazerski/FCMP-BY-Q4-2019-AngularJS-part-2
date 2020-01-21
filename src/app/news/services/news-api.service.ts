@@ -3,6 +3,14 @@ import { Injectable } from '@angular/core';
 import { OneNewsModel } from '../models/one-news.model';
 import { NewsServicesModule } from '../news-services.module';
 
+const source = [
+  'ABC',
+  'CBN',
+  'RTL',
+  'BBC',
+  'CNN',
+];
+
 const newsList = [
   new OneNewsModel(
     '5de3c84a87c8cc46046586d4',
@@ -97,6 +105,7 @@ const newsList = [
 ];
 
 const newsListPromise = Promise.resolve(newsList);
+const sourcePromise = Promise.resolve(source);
 
 @Injectable({
   providedIn: NewsServicesModule
@@ -130,5 +139,9 @@ export class NewsApiService {
     if (index > -1) {
       newsList.splice(index, 1);
     }
+  }
+
+  getSource(): Promise <Array<string>> {
+    return sourcePromise;
   }
 }
