@@ -111,7 +111,7 @@ const sourcePromise = Promise.resolve(sources);
   providedIn: NewsServicesModule
 })
 export class NewsApiService {
-  getNews(): Promise<OneNewsModel[]> {
+  getNews(): Promise<Array<OneNewsModel>> {
     return newsListPromise;
   }
 

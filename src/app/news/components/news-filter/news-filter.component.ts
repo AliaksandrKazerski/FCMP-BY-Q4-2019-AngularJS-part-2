@@ -23,7 +23,7 @@ export class NewsFilterComponent implements OnInit {
     this.text = '';
     this.newsApiService.getSource()
       .then(sources => {
-        this.sources = sources
+        this.sources = sources;
         this.selectedSource = sources[0];
       });
   }
@@ -38,5 +38,9 @@ export class NewsFilterComponent implements OnInit {
 
   onGoToEdit(): void {
     this.router.navigate(['/edit']);
+  }
+
+  onAddNewsToPortion(): void {
+
   }
 }

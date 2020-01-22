@@ -10,7 +10,9 @@ import { NewsApiService } from '../../services/news-api.service';
   styleUrls: ['./news-list.component.scss']
 })
 export class NewsListComponent implements OnInit {
-  news: Promise<Array<OneNewsModel>>;
+  news: Array<OneNewsModel>;
+  portionNews: Array<OneNewsModel>;
+  index: number;
 
   constructor(
     private newsApiService: NewsApiService,
@@ -18,7 +20,13 @@ export class NewsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.news = this.newsApiService.getNews();
+    this.index = 5;
+
+    this.newsApiService.getNews()
+      .then(news => {
+        this.news = news;
+        this.portionNews = this.news.slice(0, this.index);
+      });
   }
 
   onDeleteNews(oneNews: OneNewsModel): void {
@@ -28,5 +36,14 @@ export class NewsListComponent implements OnInit {
   onEditNews(oneNews: OneNewsModel): void {
     const link = ['/edit', oneNews._id];
     this.router.navigate(link);
+  }
+
+  onAddNewsToPortion(): void {
+    this.index += 5;
+    this.newsApiService.getNews()
+      .then(news => {
+        this.news = news;
+        this.portionNews = this.news.slice(0, this.index);
+      });
   }
 }

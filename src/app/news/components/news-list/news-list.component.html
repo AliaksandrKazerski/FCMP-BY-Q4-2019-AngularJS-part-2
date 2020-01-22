@@ -1,7 +1,14 @@
-<app-one-news
-  *ngFor="let oneNews of news | async"
-  [oneNews]="oneNews"
-  (deleteNews)="onDeleteNews($event)"
-  (editNews)="onEditNews($event)"
-  >
-</app-one-news>
+<div class="container">
+  <app-one-news
+    *ngFor="let oneNews of portionNews"
+    [oneNews]="oneNews"
+    (deleteNews)="onDeleteNews($event)"
+    (editNews)="onEditNews($event)"
+    >
+  </app-one-news>
+  <button
+    type="button"
+    class="btn btn-primary btn-lg btn-block"
+    (click)="onAddNewsToPortion()"
+  >Load more</button>
+</div>

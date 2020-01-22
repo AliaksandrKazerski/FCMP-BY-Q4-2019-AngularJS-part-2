@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderComponent, FooterComponent } from './components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { NewsModule } from './news/news.module';
@@ -11,7 +12,7 @@ import { NewsRoutingModule } from './news/news-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, HeaderComponent, FooterComponent
   ],
   imports: [
     BrowserModule,
