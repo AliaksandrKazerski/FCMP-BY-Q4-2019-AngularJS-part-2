@@ -1,147 +1,75 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import queryString from 'query-string';
 
-import { OneNewsModel } from '../models/one-news.model';
 import { NewsServicesModule } from '../news-services.module';
 
-const sources = [
-  'ABC',
-  'CBN',
-  'RTL',
-  'BBC',
-  'CNN',
-];
+import OneNewsModel from '../models/one-news.model';
+import SourcesResponse from '../../core/interfaces/sources-response';
+import NewsResponse from '../../core/interfaces/news-response';
+import Source from '../models/source.model';
+import FilterParams from 'src/app/core/interfaces/filter-params';
 
-const newsList = [
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d4',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d5',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d6',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d7',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d8',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d9',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d10',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d11',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d12',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-  new OneNewsModel(
-    '5de3c84a87c8cc46046586d13',
-    'general',
-    'News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.',
-    'en',
-    'Al Jazeera English',
-    'http://www.aljazeera.com',
-    false,
-  ),
-];
-
-const newsListPromise = Promise.resolve(newsList);
-const sourcePromise = Promise.resolve(sources);
+const newsListCreatedByMe = [];
 
 @Injectable({
   providedIn: NewsServicesModule
 })
 export class NewsApiService {
-  getNews(): Promise<Array<OneNewsModel>> {
-    return newsListPromise;
+  private API_KEY: string = '&apiKey=c8be5c2d059540f09abe3ef3d55afcb0';
+  private BASE_URL: string = 'https://newsapi.org/v2/';
+  private SOURCES_ENDPOINT: string = 'sources?';
+  private NEWS_ENDPOINT: string = 'top-headlines?';
+
+  constructor(private http: HttpClient) {}
+
+  getNews(newsParams: FilterParams = { sources: 'abc-news' }, createdByMeParam: boolean = false): Promise<Array<OneNewsModel>> {
+    let query = queryString.stringify(newsParams);
+    console.log(query);
+    return this.http
+      .get<NewsResponse>(`${this.BASE_URL}${this.NEWS_ENDPOINT}${query}${this.API_KEY}`)
+      .toPromise()
+      .then((response: NewsResponse) => response.articles.concat(newsListCreatedByMe))
+      .then(news => news = createdByMeParam ? news.filter(news => news.createdByMe) : news)
+      .catch(this.handleError);
   }
 
   getOneNews(id: string): Promise<OneNewsModel> {
     return this.getNews()
-      .then(news => news.find(oneNews => oneNews._id === id))
+      .then(news => news.find(oneNews => oneNews.id === id))
       .catch(() => Promise.reject('Error in getMews method'));
   }
 
   createNews(news: OneNewsModel): void {
-    newsList.push(news);
+    newsListCreatedByMe.push(news);
   }
 
   updateNews(news: OneNewsModel): void {
-    const index = newsList.findIndex(oneNews => oneNews._id === news._id);
+    const index = newsListCreatedByMe.findIndex(oneNews => oneNews.id === news.id);
 
     if (index > -1) {
-      newsList.splice(index, 1, news);
+      newsListCreatedByMe.splice(index, 1, news);
     }
   }
 
   deleteNews(news: OneNewsModel): void {
-    const index = newsList.findIndex(oneNews => oneNews._id === news._id);
+    const index = newsListCreatedByMe.findIndex(oneNews => oneNews.id === news.id);
 
     if (index > -1) {
-      newsList.splice(index, 1);
+      newsListCreatedByMe.splice(index, 1);
     }
   }
 
-  getSource(): Promise <Array<string>> {
-    return sourcePromise;
+  getSource(): Promise<Array<Source>> {
+    return this.http
+      .get<SourcesResponse>(`${this.BASE_URL}${this.SOURCES_ENDPOINT}${this.API_KEY}`)
+      .toPromise()
+      .then((response: SourcesResponse) => response.sources)
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.log('An error occurred', error);
+    return Promise.reject(error.message || error);
   }
 }

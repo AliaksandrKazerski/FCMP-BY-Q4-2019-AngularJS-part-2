@@ -6,7 +6,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-import { OneNewsModel } from '../../models/one-news.model';
+import OneNewsModel from '../../models/one-news.model';
 
 @Component({
   selector: 'app-one-news',

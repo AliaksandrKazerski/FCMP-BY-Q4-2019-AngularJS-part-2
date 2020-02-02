@@ -1,2 +1,8 @@
-<app-news-filter></app-news-filter>
-<app-news-list></app-news-list>
+<app-news-filter
+  (filterNewsChange)="onFilterNewsChange($event)"
+  (filterCreatedByMeChange)="onFilterCreatedByMeChange($event)"
+></app-news-filter>
+<app-news-list
+  [filterNewsParams]="filterNewsParams"
+  [filterCreatedByMeParam]="filterCreatedByMeParam"
+  ></app-news-list>

@@ -7,6 +7,7 @@
     >
   </app-one-news>
   <button
+    *ngIf="this.index < this.news.length"
     type="button"
     class="btn btn-primary btn-lg btn-block"
     (click)="onAddNewsToPortion()"

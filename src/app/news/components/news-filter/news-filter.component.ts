@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { NewsApiService } from '../../services/news-api.service';
 import { Router } from '@angular/router';
+
+import Source from '../../models/source.model';
+import FilterParams from '../../../core/interfaces/filter-params';
 
 @Component({
   selector: 'app-news-filter',
@@ -9,7 +12,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./news-filter.component.scss']
 })
 export class NewsFilterComponent implements OnInit {
-  sources: Array<string>;
+  @Output() filterNewsChange: EventEmitter<FilterParams> = new EventEmitter();
+  @Output() filterCreatedByMeChange: EventEmitter<boolean> = new EventEmitter();
+
+  sources: Array<Source>;
   selectedSource: string;
   text: string;
 
@@ -24,23 +30,20 @@ export class NewsFilterComponent implements OnInit {
     this.newsApiService.getSource()
       .then(sources => {
         this.sources = sources;
-        this.selectedSource = sources[0];
+        this.selectedSource = sources[0].id;
       });
   }
 
   onFilterNews(): void {
-    console.log(this.text, this.selectedSource);
+    this.filterNewsChange.emit({q: this.text, sources: this.selectedSource});
   }
 
-  onFilterNewsCreatedByMe(event): void {
+  onFilterNewsCreatedByMe(event: any): void {
     console.log(event.target.checked);
+    this.filterCreatedByMeChange.emit(event.target.checked);
   }
 
   onGoToEdit(): void {
     this.router.navigate(['/edit']);
-  }
-
-  onAddNewsToPortion(): void {
-
   }
 }
