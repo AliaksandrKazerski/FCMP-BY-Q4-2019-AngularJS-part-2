@@ -19,6 +19,7 @@ export class OneNewsComponent {
 
   @Output() deleteNews = new EventEmitter<OneNewsModel>();
   @Output() editNews = new EventEmitter<OneNewsModel>();
+  @Output() goToNews = new EventEmitter<OneNewsModel>();
 
   onDeleteNews(): void {
     this.deleteNews.emit(this.oneNews);
@@ -26,5 +27,9 @@ export class OneNewsComponent {
 
   onEditNews(): void {
     this.editNews.emit(this.oneNews);
+  }
+
+  onGoToNews(): void {
+    this.goToNews.emit(this.oneNews);
   }
 }

@@ -22,22 +22,13 @@ export class NewsFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.oneNews = new OneNewsModel();
+    this.oneNews = new OneNewsModel;
+    const id = this.route.snapshot.paramMap.get('oneNewsID');
+    console.log(id);
 
-    const observer = {
-      next: (oneNews: OneNewsModel) => {
-        this.oneNews = { ...oneNews};
-      },
-      error: (err: any) => console.log(err)
-    };
-
-    this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) =>
-          this.newsApiService.getOneNews(params.get('oneNewsID'))
-        )
-      )
-      .subscribe(observer);
+    if (id) {
+      this.oneNews = this.newsApiService.getOneNews(id);
+    }
   }
 
   onSaveNews(): void {

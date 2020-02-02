@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import queryString from 'query-string';
+import * as queryString from 'query-string';
 
 import { NewsServicesModule } from '../news-services.module';
 
@@ -34,10 +34,8 @@ export class NewsApiService {
       .catch(this.handleError);
   }
 
-  getOneNews(id: string): Promise<OneNewsModel> {
-    return this.getNews()
-      .then(news => news.find(oneNews => oneNews.id === id))
-      .catch(() => Promise.reject('Error in getMews method'));
+  getOneNews(id: string): OneNewsModel {
+    return newsListCreatedByMe.find(oneNews => oneNews.id === id);
   }
 
   createNews(news: OneNewsModel): void {

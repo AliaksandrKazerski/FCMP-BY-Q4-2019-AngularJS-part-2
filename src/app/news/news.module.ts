@@ -4,7 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsServicesModule } from './news-services.module';
-import { NewsListComponent, OneNewsComponent, NewsFormComponent, NewsComponent, NewsFilterComponent } from './components';
+import {
+  NewsListComponent,
+  OneNewsComponent,
+  NewsFormComponent,
+  NewsComponent,
+  NewsFilterComponent,
+  ArticleComponent,
+ } from './components';
 
 @NgModule({
   declarations: [
@@ -13,6 +20,7 @@ import { NewsListComponent, OneNewsComponent, NewsFormComponent, NewsComponent, 
     NewsFormComponent,
     NewsComponent,
     NewsFilterComponent,
+    ArticleComponent,
   ],
   imports: [
     CommonModule,

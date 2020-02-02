@@ -52,6 +52,15 @@ export class NewsListComponent implements OnInit, OnChanges {
     this.router.navigate(link);
   }
 
+  onGoToNews(oneNews: OneNewsModel): void {
+    if (oneNews.createdByMe) {
+      const link = ['/news', oneNews.id]
+      this.router.navigate(link);
+    } else {
+      window.location.href = oneNews.url;
+    }
+  }
+
   onAddNewsToPortion(): void {
     this.index += 5;
     this.portionNews = this.news.slice(0, this.index);
