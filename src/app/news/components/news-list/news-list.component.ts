@@ -1,9 +1,19 @@
-import {Component, OnInit, Input, OnChanges, ComponentFactoryResolver} from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  OnInit,
+  Input,
+  OnChanges,
+  ComponentFactoryResolver,
+  ViewContainerRef,
+  ComponentFactory
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NewsApiService } from '../../services/news-api.service';
 import OneNewsModel from '../../models/one-news.model';
 import FilterParams from 'src/app/core/interfaces/filter-params';
+import { OneNewsComponent } from '../one-news';
 
 @Component({
   selector: 'app-news-list',
@@ -17,11 +27,13 @@ export class NewsListComponent implements OnInit, OnChanges {
   news: Array<OneNewsModel>;
   portionNews: Array<OneNewsModel>;
   index: number;
+  componentRef: ComponentRef<OneNewsComponent>;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private newsApiService: NewsApiService,
     private router: Router,
+    private viewContainerRef: ViewContainerRef,
   ) { }
 
   ngOnChanges(): void {
@@ -29,18 +41,25 @@ export class NewsListComponent implements OnInit, OnChanges {
       .then(news => {
         this.news = news;
         this.portionNews = this.news.slice(0, this.index);
+        // this.createComponent()
+        // this.portionNews.forEach(news => this.updateComponent(news));
       });
   }
 
   ngOnInit(): void {
     this.index = 5;
     this.news = [];
-    this.loadComponent();
   }
 
-  loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.portionNews)
-  }
+  // createComponent(): void {
+  //   const componentFactory: ComponentFactory<OneNewsComponent> =
+  //     this.componentFactoryResolver.resolveComponentFactory(OneNewsComponent);
+  //     this.componentRef = this.viewContainerRef.createComponent(componentFactory);
+  // }
+
+  // updateComponent(news: OneNewsModel): void {
+  //   this.componentRef.instance.oneNews = news;
+  // }
 
   onDeleteNews(oneNews: OneNewsModel): void {
     this.newsApiService.deleteNews(oneNews);

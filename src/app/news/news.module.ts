@@ -27,6 +27,7 @@ import {
     FormsModule,
     NewsRoutingModule,
     NewsServicesModule
-  ]
+  ],
+  entryComponents: [OneNewsComponent],
 })
 export class NewsModule { }
