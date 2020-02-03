@@ -3,8 +3,7 @@ import {
   ChangeDetectionStrategy,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import OneNewsModel from '../../models/one-news.model';
 import { NewsApiService } from '../../services/news-api.service';
@@ -17,6 +16,7 @@ import { NewsApiService } from '../../services/news-api.service';
 })
 export class ArticleComponent implements OnInit {
   oneNews: OneNewsModel;
+  title: string;
 
   constructor(
     private newsApiService: NewsApiService,
@@ -25,15 +25,18 @@ export class ArticleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.title = 'created by me';
     this.oneNews = this.newsApiService.getOneNews(this.route.snapshot.paramMap.get('articleID'));
   }
 
   onDeleteNews(): void {
-    this.deleteNews.emit(this.oneNews);
+    this.newsApiService.deleteNews(this.oneNews);
+    this.router.navigate(['/news']);
   }
 
   onEditNews(): void {
-    this.editNews.emit(this.oneNews);
+    const link = ['/edit', this.oneNews.id];
+    this.router.navigate(link);
   }
 }
 

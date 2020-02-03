@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import FilterParams from 'src/app/core/interfaces/filter-params';
 
 @Component({
@@ -6,16 +6,25 @@ import FilterParams from 'src/app/core/interfaces/filter-params';
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.scss']
 })
-export class NewsComponent {
-
+export class NewsComponent implements OnInit {
   filterNewsParams: FilterParams;
   filterCreatedByMeParam: boolean;
+  headerValue: string;
 
-  onFilterNewsChange(params: FilterParams) {
-    this.filterNewsParams = params;
+  ngOnInit(): void {
+    this.filterNewsParams = {sources: 'abc-news'};
+    this.headerValue = this.filterCreatedByMeParam ? 'created by me' : this.filterNewsParams.sources;
   }
 
-  onFilterCreatedByMeChange(param: boolean) {
+  onFilterNewsChange(params: FilterParams): void {
+    this.filterNewsParams = params;
+    this.headerValue = params.sources;
+  }
+
+  onFilterCreatedByMeChange(param: boolean): void {
     this.filterCreatedByMeParam = param;
+    if (param) {
+      this.headerValue = 'created by me';
+    }
   }
 }

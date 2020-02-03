@@ -9,10 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { NewsModule } from './news/news.module';
 import { NewsRoutingModule } from './news/news-routing.module';
+import { DefaultImageUrlPipe, DateTransformPipe } from './pipes';
+
 
 @NgModule({
   declarations: [
-    AppComponent, HeaderComponent, FooterComponent
+    AppComponent, HeaderComponent, FooterComponent, DefaultImageUrlPipe, DateTransformPipe,
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,9 @@ import { NewsRoutingModule } from './news/news-routing.module';
     AppRoutingModule,
   ],
   providers: [],
+  exports: [
+    DefaultImageUrlPipe, DateTransformPipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

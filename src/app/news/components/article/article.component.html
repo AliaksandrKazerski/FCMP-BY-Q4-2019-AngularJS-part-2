@@ -1,34 +1,40 @@
-<div class="card mb-3" style="max-width: 1200px;">
-  <div class="row no-gutters">
-    <div class="col-md-5">
-      <img src="{{oneNews.urlToImage !== 'null' ? oneNews.urlToImage : null}}" class="card-img" alt="{{'image'}}">
-    </div>
-    <div class="col-md-6">
-      <div class="card-body">
-        <h5 class="card-title">{{oneNews.source.name}}</h5>
-        <p class="card-text">{{oneNews.title}}</p>
-        <p class="card-text"><small class="text-muted">{{oneNews.content}}</small></p>
+<div class="header-text container">
+  <h1 class="text-dark">{{title | titlecase}}</h1>
+</div>
+<div class="container">
+  <div class="card mb-3" style="max-width: 1200px;">
+    <div class="row no-gutters">
+      <div class="col-md-5">
+        <img src="{{oneNews.urlToImage !== 'null' ? oneNews.urlToImage : null}}" class="card-img" alt="{{'image'}}">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title">{{oneNews.source.name}}</h5>
+          <p class="card-text">{{oneNews.title}}</p>
+          <p class="card-text"><small class="text-muted">{{oneNews.content}}</small></p>
+          <p class="card-text"><small class="text-muted">{{oneNews.publishedAt}}</small></p>
+          <p class="card-text"><small class="text-muted">{{oneNews.autor}}</small></p>
+        </div>
+      </div>
+      <div
+      *ngIf="oneNews.createdByMe"
+      class="col-md-1"
+      >
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onDeleteNews()"
+        >
+        Delete
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onEditNews()"
+        >
+        Edit
+        </button>
       </div>
     </div>
-    <div
-    *ngIf="oneNews.createdByMe"
-    class="col-md-1"
-    >
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="onDeleteNews()"
-      >
-      Delete
-      </button>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        (click)="onEditNews()"
-      >
-      Edit
-      </button>
-    </div
-    >
   </div>
 </div>

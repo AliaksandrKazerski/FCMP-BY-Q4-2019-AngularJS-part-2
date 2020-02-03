@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import {Component, OnInit, Input, OnChanges, ComponentFactoryResolver} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NewsApiService } from '../../services/news-api.service';
@@ -19,6 +19,7 @@ export class NewsListComponent implements OnInit, OnChanges {
   index: number;
 
   constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
     private newsApiService: NewsApiService,
     private router: Router,
   ) { }
@@ -27,7 +28,6 @@ export class NewsListComponent implements OnInit, OnChanges {
     this.newsApiService.getNews(this.filterNewsParams, this.filterCreatedByMeParam)
       .then(news => {
         this.news = news;
-        console.log(this.news);
         this.portionNews = this.news.slice(0, this.index);
       });
   }
@@ -35,6 +35,11 @@ export class NewsListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.index = 5;
     this.news = [];
+    this.loadComponent();
+  }
+
+  loadComponent() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.portionNews)
   }
 
   onDeleteNews(oneNews: OneNewsModel): void {
@@ -54,7 +59,7 @@ export class NewsListComponent implements OnInit, OnChanges {
 
   onGoToNews(oneNews: OneNewsModel): void {
     if (oneNews.createdByMe) {
-      const link = ['/news', oneNews.id]
+      const link = ['/news', oneNews.id];
       this.router.navigate(link);
     } else {
       window.location.href = oneNews.url;

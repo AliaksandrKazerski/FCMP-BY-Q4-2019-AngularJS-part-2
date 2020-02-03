@@ -24,8 +24,7 @@ export class NewsApiService {
   constructor(private http: HttpClient) {}
 
   getNews(newsParams: FilterParams = { sources: 'abc-news' }, createdByMeParam: boolean = false): Promise<Array<OneNewsModel>> {
-    let query = queryString.stringify(newsParams);
-    console.log(query);
+    const query = queryString.stringify(newsParams);
     return this.http
       .get<NewsResponse>(`${this.BASE_URL}${this.NEWS_ENDPOINT}${query}${this.API_KEY}`)
       .toPromise()
