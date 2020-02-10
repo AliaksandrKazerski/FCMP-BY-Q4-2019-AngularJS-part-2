@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsServicesModule } from './news-services.module';
+
 import {
   NewsListComponent,
   OneNewsComponent,
@@ -26,7 +27,8 @@ import {
     CommonModule,
     FormsModule,
     NewsRoutingModule,
-    NewsServicesModule
+    NewsServicesModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [OneNewsComponent],
 })

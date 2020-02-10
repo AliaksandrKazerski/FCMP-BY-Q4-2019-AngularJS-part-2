@@ -6,90 +6,84 @@
     *ngIf="oneNews"
     (ngSubmit)="onSaveNews()"
     id="news-form"
-    #form="ngForm"
+    [formGroup]="newsForm"
+    novalidate
   >
     <div class="form-group">
       <label for="exampleFormControlInput1">Title</label>
       <input
+        formControlName="title"
         type="text"
         class="form-control"
         id="exampleFormControlInput1"
         name="exampleFormControlInput1"
-        required
-        [(ngModel)]="oneNews.title"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput2">Description</label>
       <input
+        formControlName="description"
         type="text"
         class="form-control"
         id="exampleFormControlInput2"
         name="exampleFormControlInput2"
-        required
-        [(ngModel)]="oneNews.description"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput3">Image URL</label>
       <input
+        formControlName="urlToImage"
         type="url"
         class="form-control"
         id="exampleFormControlInput3"
         name="exampleFormControlInput3"
-        required
-        [(ngModel)]="oneNews.urlToImage"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput4">Date</label>
       <input
+        formControlName="publishedAt"
         type="text"
         class="form-control"
         id="exampleFormControlInput4"
         name="exampleFormControlInput4"
-        required
-        [(ngModel)]="oneNews.publishedAt"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput5">Autor</label>
       <input
+        formControlName="autor"
         type="text"
         class="form-control"
         id="exampleFormControlInput5"
         name="exampleFormControlInput5"
-        required
-        [(ngModel)]="oneNews.autor"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlInput6">Source URL</label>
       <input
+        formControlName="url"
         type="url"
         class="form-control"
         id="exampleFormControlInput6"
         name="exampleFormControlInput6"
-        required
-        [(ngModel)]="oneNews.url"
       >
     </div>
     <div class="form-group">
       <label for="exampleFormControlTextarea1">Content</label>
       <textarea
+        formControlName="content"
         class="form-control"
         id="exampleFormControlTextarea1"
         name="exampleFormControlTextarea1"
         rows="5"
-        required
-        [(ngModel)]="oneNews.content"
       ></textarea>
     </div>
     <button
       type="submit"
       class="btn btn-primary"
       form="news-form"
-      [disabled]="form.form.invalid"
+      [disabled]="newsForm.invalid"
     >
       Save
     </button>
