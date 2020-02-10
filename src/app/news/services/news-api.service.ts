@@ -16,32 +16,32 @@ const newsListCreatedByMe = [];
   providedIn: NewsServicesModule
 })
 export class NewsApiService {
-  private API_KEY: string = '&apiKey=c8be5c2d059540f09abe3ef3d55afcb0';
-  private BASE_URL: string = 'https://newsapi.org/v2/';
-  private SOURCES_ENDPOINT: string = 'sources?';
-  private NEWS_ENDPOINT: string = 'top-headlines?';
+  private API_KEY = 'c8be5c2d059540f09abe3ef3d55afcb0';
+  private BASE_URL = 'https://newsapi.org/v2/';
+  private SOURCES_ENDPOINT = 'sources';
+  private NEWS_ENDPOINT = 'top-headlines';
 
   constructor(private http: HttpClient) {}
 
-  getNews(newsParams: FilterParams = { sources: 'abc-news' }, createdByMeParam: boolean = false): Promise<Array<OneNewsModel>> {
+  public getNews(newsParams: FilterParams = { sources: 'abc-news' }, createdByMeParam: boolean = false): Promise<Array<OneNewsModel>> {
     const query = queryString.stringify(newsParams);
     return this.http
-      .get<NewsResponse>(`${this.BASE_URL}${this.NEWS_ENDPOINT}${query}${this.API_KEY}`)
+      .get<NewsResponse>(`${this.BASE_URL}${this.NEWS_ENDPOINT}?${query}&apiKey=${this.API_KEY}`)
       .toPromise()
       .then((response: NewsResponse) => response.articles.concat(newsListCreatedByMe))
       .then(news => news = createdByMeParam ? news.filter(news => news.createdByMe) : news)
       .catch(this.handleError);
   }
 
-  getOneNews(id: string): OneNewsModel {
+  public getOneNews(id: string): OneNewsModel {
     return newsListCreatedByMe.find(oneNews => oneNews.id === id);
   }
 
-  createNews(news: OneNewsModel): void {
+  public createNews(news: OneNewsModel): void {
     newsListCreatedByMe.push(news);
   }
 
-  updateNews(news: OneNewsModel): void {
+  public updateNews(news: OneNewsModel): void {
     const index = newsListCreatedByMe.findIndex(oneNews => oneNews.id === news.id);
 
     if (index > -1) {
@@ -49,7 +49,7 @@ export class NewsApiService {
     }
   }
 
-  deleteNews(news: OneNewsModel): void {
+  public deleteNews(news: OneNewsModel): void {
     const index = newsListCreatedByMe.findIndex(oneNews => oneNews.id === news.id);
 
     if (index > -1) {
@@ -57,9 +57,9 @@ export class NewsApiService {
     }
   }
 
-  getSource(): Promise<Array<Source>> {
+  public getSource(): Promise<Array<Source>> {
     return this.http
-      .get<SourcesResponse>(`${this.BASE_URL}${this.SOURCES_ENDPOINT}${this.API_KEY}`)
+      .get<SourcesResponse>(`${this.BASE_URL}${this.SOURCES_ENDPOINT}?&apiKey=${this.API_KEY}`)
       .toPromise()
       .then((response: SourcesResponse) => response.sources)
       .catch(this.handleError);

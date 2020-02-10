@@ -17,11 +17,11 @@ const defaultUrl = 'https://dapp.dblog.org/img/default.jpg';
   providers: [DefaultImageUrlPipe]
 })
 export class OneNewsComponent implements OnInit{
-  @Input() oneNews: OneNewsModel;
+  @Input() public oneNews: OneNewsModel;
 
-  @Output() deleteNews = new EventEmitter<OneNewsModel>();
-  @Output() editNews = new EventEmitter<OneNewsModel>();
-  @Output() goToNews = new EventEmitter<OneNewsModel>();
+  @Output() public deleteNews = new EventEmitter<OneNewsModel>();
+  @Output() public editNews = new EventEmitter<OneNewsModel>();
+  @Output() public goToNews = new EventEmitter<OneNewsModel>();
 
   constructor(private defaultImageUrl: DefaultImageUrlPipe) {}
 
