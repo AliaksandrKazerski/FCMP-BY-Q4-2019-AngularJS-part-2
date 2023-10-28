@@ -33,7 +33,7 @@
     "document-register-element": "^1.7.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.22",
+    "@angular-devkit/build-angular": "~16.2.8",
     "@angular/cli": "~15.1.4",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
